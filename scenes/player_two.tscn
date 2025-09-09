@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://btcq18bc4nik"]
+
+[ext_resource type="Texture2D" uid="uid://0tsoeomfhk5h" path="res://textures/test_textures/green/texture_05.png" id="1_18nlp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4asn1"]
+albedo_texture = ExtResource("1_18nlp")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dw7u0"]
+material = SubResource("StandardMaterial3D_4asn1")
+radial_segments = 8
+rings = 6
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qcd3b"]
+points = PackedVector3Array(-0.00719303, -0.909086, -0.279793, 0.0225324, 0.468106, 0.490671, -0.0068637, 0.474397, 0.497158, -0.00703843, 0.749853, -0.426867, 0.497179, -0.474237, -0.00681376, -0.35914, -0.587464, 0.316352, -0.475484, 0.585984, -0.0358901, 0.382703, 0.809675, 0.0228572, 0.319528, -0.712519, 0.319611, -0.357693, -0.555818, -0.328471, 0.344187, -0.497093, -0.357497, -0.246424, 0.838152, 0.262366, 0.34644, 0.588779, 0.346526, 0.34725, 0.619772, -0.331368, 0.0226982, -0.591706, -0.480297, 0.0228388, -0.716943, 0.441008, -0.426901, -0.749896, -0.00689052, -0.334047, 0.65426, -0.334029, 0.144924, -0.974687, -0.00711709, -0.128628, 0.971598, -0.0677794, -0.357476, 0.497045, 0.344239, 0.497179, 0.474237, -0.00681376, 0.0229053, 0.870161, 0.32295, -0.158072, -0.936322, 0.174006, -0.0068637, -0.474397, 0.497158, 0.0226983, 0.591712, -0.480302, -0.480305, -0.591828, 0.0226592, 0.380282, -0.804443, -0.0366326, 0.174031, 0.936316, -0.158034, 0.34644, -0.588779, 0.346526, 0.322292, -0.718841, -0.306407, -0.277113, -0.810174, -0.276992)
+
+[node name="PlayerTwo" type="CharacterBody3D"]
+transform = Transform3D(-0.999428, 0, 0.0338181, 0, 1, 0, -0.0338181, 0, -0.999428, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_dw7u0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_qcd3b")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.587935, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]

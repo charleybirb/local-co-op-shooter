@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://b27626k15ijot"]
+
+[ext_resource type="PackedScene" uid="uid://b1i4hfe43ywad" path="res://scenes/test_level.tscn" id="1_o5qli"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerOneViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 542)
+render_target_update_mode = 4
+
+[node name="TestLevel" parent="VBoxContainer/SubViewportContainer/PlayerOneViewport" instance=ExtResource("1_o5qli")]
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerTwoViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(1920, 540)
+render_target_update_mode = 4
