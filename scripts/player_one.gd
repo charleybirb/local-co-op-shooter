@@ -1,6 +1,5 @@
 extends CharacterBody3D
 
-
 const WALK_SPEED : float = 5.0
 const SPRINT_SPEED : float = 7.5 
 const JUMP_VELOCITY : float = 5.5
@@ -10,7 +9,10 @@ const TILT_CLAMP : Vector2 = Vector2(-75.0, 80.0)
 const BOB_FREQ : float = 2.0
 const BOB_AMP : float = 0.08
 const BASE_FOV : float = 75.0
-const FOV_CHANGE : float = 9.0
+const FOV_CHANGE : float = 11.6
+
+const JUMP_BUFFER : float = 0.155
+const COYOTE_BUFFER : float = 0.187
 
 @export var head : Node3D
 @export var tilt : Node3D
@@ -21,6 +23,9 @@ const FOV_CHANGE : float = 9.0
 var speed : float = WALK_SPEED
 var t_bob : float = 0.0
 var is_gamepad : bool = false
+
+var jump_time_pressed : float = 0.0
+var coyote_time : float = 0.0
 
 
 func _ready() -> void:
@@ -39,15 +44,46 @@ func _physics_process(delta: float) -> void:
 		move_camera(input.mouse_direction, MOUSE_SENS)
 	
 	apply_gravity(delta)
-
-	if &"jump" in input.pressed_actions and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		
+	check_jump(delta, input)
 	apply_velocity(delta, input)
 	set_camera_effects(delta, input)
+	
 	move_and_slide()
 	
 	input.queue_free()
+
+
+func check_jump(delta: float, input: InputPackage) -> void:
+	if not is_on_floor() and coyote_time == 0.0:
+		coyote_time += delta
+	
+	
+	if coyote_time > 0.0:
+		coyote_time += delta
+		if coyote_time < COYOTE_BUFFER:
+			if &"jump" in input.pressed_actions:
+				jump()
+	
+	if is_on_floor():
+		coyote_time = 0.0
+	
+	print(coyote_time)
+
+	if jump_time_pressed > 0.0:
+		jump_time_pressed += delta
+		if jump_time_pressed < JUMP_BUFFER:
+			if is_on_floor():
+				jump()
+				jump_time_pressed = 0.0
+		else:
+			jump_time_pressed = 0.0
+	
+	if &"jump" in input.pressed_actions and jump_time_pressed == 0.0:
+		jump_time_pressed += delta
+
+
+func jump() -> void:
+	velocity.y += JUMP_VELOCITY
 
 
 func apply_gravity(delta: float) -> void:
@@ -65,7 +101,7 @@ func apply_velocity(delta: float, input: InputPackage) -> void:
 			velocity.z = direction.z * speed
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
-		velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 2.5)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 2.5)
@@ -81,15 +117,15 @@ func move_camera(direction: Vector2, sensitivity: float) -> void:
 func set_camera_effects(delta: float, input: InputPackage) -> void:
 	#Bob the head
 	t_bob += delta * velocity.length() * float(is_on_floor())
-	camera.transform.origin = _headbob(t_bob)
+	camera.transform.origin = _get_headbob(t_bob)
 	
 	#Set the FOV
-	var is_sprinting : bool = &"sprint" in input.held_actions and velocity.length() > 1.0
+	var is_sprinting : bool = &"sprint" in input.held_actions and Vector2(velocity.x, velocity.z).length() > 1.0
 	var target_fov : float = BASE_FOV + (FOV_CHANGE * int(is_sprinting))
-	camera.fov = lerp(camera.fov, target_fov, delta * 1.5)
+	camera.fov = lerp(camera.fov, target_fov, delta * 3.4)
 
 
-func _headbob(time: float) -> Vector3:
+func _get_headbob(time: float) -> Vector3:
 	var pos : Vector3 = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP

@@ -3,7 +3,6 @@ extends Node3D
 @export var raycast : RayCast3D
 @export var decal_scene : PackedScene
 
-#var can_shoot : bool = true
 
 @onready var anim_player : AnimationPlayer = $MeshInstance3D/AnimationPlayer
 
@@ -15,7 +14,6 @@ func _physics_process(_delta: float) -> void:
 
 
 func shoot() -> void:
-	#raycast.enabled = true
 	anim_player.play(&"shoot")
 	if not raycast.get_collider(): return
 	var collider : Node3D = raycast.get_collider()
@@ -24,17 +22,7 @@ func shoot() -> void:
 	var new_decal : Decal = decal_scene.instantiate()
 	collider.add_child(new_decal)
 	new_decal.global_transform.origin = col_point
-	#print(col_normal)
-	new_decal.look_at(-col_normal)
+	new_decal.look_at(col_normal, col_normal)
 	decals.append(new_decal)
 	if decals.size() > 10: decals.pop_front().queue_free()
-	
-		#collider.queue_free()
-	#can_shoot = false
-	
-
-func disable_raycast() -> void:
-	#raycast.enabled = false
-	pass
-	#can_shoot = true
 	
