@@ -79,20 +79,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0.503489, -0.00438373, -0.00211509), Vector3(0.55798, -0.00405021, -0.00223946), Vector3(0, 0, 0)]
 }
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("..")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"disable_raycast"
-}]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g53jo"]
 _data = {

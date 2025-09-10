@@ -20,9 +20,14 @@ func shoot() -> void:
 	var col_point : Vector3 = raycast.get_collision_point()
 	var col_normal : Vector3 = raycast.get_collision_normal()
 	var new_decal : Decal = decal_scene.instantiate()
+	
 	collider.add_child(new_decal)
 	new_decal.global_transform.origin = col_point
-	new_decal.look_at(col_normal, col_normal)
+	
+	var up_vector : Vector3 = Vector3.UP if col_normal != Vector3.UP else Vector3.RIGHT
+	new_decal.look_at(col_point + col_normal, up_vector)
+	new_decal.rotation.x -= PI/2
+	
 	decals.append(new_decal)
 	if decals.size() > 10: decals.pop_front().queue_free()
 	

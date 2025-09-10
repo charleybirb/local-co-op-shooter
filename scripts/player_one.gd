@@ -57,7 +57,6 @@ func check_jump(delta: float, input: InputPackage) -> void:
 	if not is_on_floor() and coyote_time == 0.0:
 		coyote_time += delta
 	
-	
 	if coyote_time > 0.0:
 		coyote_time += delta
 		if coyote_time < COYOTE_BUFFER:
@@ -66,8 +65,6 @@ func check_jump(delta: float, input: InputPackage) -> void:
 	
 	if is_on_floor():
 		coyote_time = 0.0
-	
-	print(coyote_time)
 
 	if jump_time_pressed > 0.0:
 		jump_time_pressed += delta
