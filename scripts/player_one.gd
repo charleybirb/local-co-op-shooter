@@ -19,26 +19,28 @@ const COYOTE_BUFFER : float = 0.187
 @export var pan : Node3D
 @export var camera : Camera3D
 @export var input_manager : InputManager
+@export var joy_index : int = 0
 
 var speed : float = WALK_SPEED
 var t_bob : float = 0.0
-var is_gamepad : bool = false
+var is_joypad : bool = true
 
 var jump_time_pressed : float = 0.0
 var coyote_time : float = 0.0
 
-
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if joy_index == 0: camera.make_current()
+	else: is_joypad = false
 
 
 func _physics_process(delta: float) -> void:
 	var input : InputPackage = input_manager.get_inputs()
 	
 	if Input.is_action_just_pressed(&"switch_input_type"):
-		is_gamepad = !is_gamepad
+		is_joypad = !is_joypad
 	
-	if is_gamepad:
+	if is_joypad:
 		move_camera(input.look_direction, LOOK_SENS)
 	else:
 		move_camera(input.mouse_direction, MOUSE_SENS)

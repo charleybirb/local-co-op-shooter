@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://btcq18bc4nik"]
+[gd_scene load_steps=7 format=3 uid="uid://btcq18bc4nik"]
 
 [ext_resource type="Texture2D" uid="uid://0tsoeomfhk5h" path="res://textures/test_textures/green/texture_05.png" id="1_18nlp"]
+[ext_resource type="Script" uid="uid://bxc5dl5bce36j" path="res://scripts/player_two.gd" id="1_rksa8"]
+[ext_resource type="Script" uid="uid://dp2xmorkro450" path="res://scripts/health_component.gd" id="2_jh5ej"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4asn1"]
 albedo_texture = ExtResource("1_18nlp")
@@ -15,6 +17,7 @@ points = PackedVector3Array(-0.00719303, -0.909086, -0.279793, 0.0225324, 0.4681
 
 [node name="PlayerTwo" type="CharacterBody3D"]
 transform = Transform3D(-0.999428, 0, 0.0338181, 0, 1, 0, -0.0338181, 0, -0.999428, 0, 0, 0)
+script = ExtResource("1_rksa8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_dw7u0")
@@ -26,3 +29,6 @@ shape = SubResource("ConvexPolygonShape3D_qcd3b")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.587935, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_jh5ej")

@@ -2,41 +2,54 @@ class_name InputManager
 extends Node
 
 var mouse_dir : Vector2 = Vector2.ZERO
+var parent : CharacterBody3D
+
+
+func _ready() -> void:
+	parent = get_parent()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if parent.is_joypad: return
 	if not event is InputEventMouseMotion: return
 	mouse_dir.x = event.relative.x
 	mouse_dir.y = event.relative.y
-	#pan.rotate_y(-event.relative.x * LOOK_SENS)
-	#tilt.rotate_x(-event.relative.y * LOOK_SENS)
-	#tilt.rotation.x = clamp(tilt.rotation.x, deg_to_rad(TILT_CLAMP.x), deg_to_rad(TILT_CLAMP.y))
 
 
 func get_inputs() -> InputPackage:
 	var input : InputPackage = InputPackage.new()
+	var joy_index : String = str(parent.joy_index) if parent.joy_index != -1 else ""
 	
 	var pressable_actions : Array[StringName] = [
-		&"jump",
+		&"jump" + joy_index,
 	]
 	for action : StringName in pressable_actions:
 		if check_pressed_action(action):
-			input.pressed_actions.append(action)
+			input.pressed_actions.append(action.trim_suffix(joy_index))
 	
 	var held_actions : Array[StringName] = [
-		&"sprint"
+		&"sprint" + joy_index
 	]
 	for action : StringName in held_actions:
 		if check_held_action(action):
-			input.held_actions.append(action)
+			input.held_actions.append(action.trim_suffix(joy_index))
 	
-	var move_dir : Vector2 = Input.get_vector(&"strafe_left", &"strafe_right", &"move_forward", &"move_backward")
+	var move_dir : Vector2 = Input.get_vector(
+		&"strafe_left" + joy_index, 
+		&"strafe_right" + joy_index, 
+		&"move_forward" + joy_index, 
+		&"move_backward" + joy_index)
 	input.move_direction = move_dir
 	
-	var look_dir : Vector2 = Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
-	input.look_direction = look_dir
-	
-	input.mouse_direction = mouse_dir
-	mouse_dir = Vector2.ZERO
+	if parent.is_joypad:
+		var look_dir : Vector2 = Input.get_vector(
+			&"look_left" + joy_index, 
+			&"look_right" + joy_index, 
+			&"look_up" + joy_index, 
+			&"look_down" + joy_index)
+		input.look_direction = look_dir
+	else:
+		input.mouse_direction = mouse_dir
+		mouse_dir = Vector2.ZERO
 	
 	return input
 
