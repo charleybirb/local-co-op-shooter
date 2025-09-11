@@ -6,10 +6,10 @@ const JUMP_VELOCITY : float = 5.5
 const JUMP_BUFFER : float = 0.155
 const COYOTE_BUFFER : float = 0.187
 
-
 @export var input_manager : InputManager
 @export var joypad_index : int = 0
 @export var head : Node3D
+@export var mesh : MeshInstance3D
 
 var speed : float = WALK_SPEED
 

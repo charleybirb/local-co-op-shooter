@@ -9,11 +9,11 @@ extends Node3D
 @onready var sfx : AudioStreamPlayer = $AudioStreamPlayer
 @onready var anim_player : AnimationPlayer = $MeshInstance3D/AnimationPlayer
 
-var decals : Array[Decal] = []
 var joypad_index : int
 
 func _ready() -> void:
 	joypad_index = player.joypad_index
+
 
 func _physics_process(_delta: float) -> void:
 	var action_suffix = str(joypad_index) if joypad_index != -1 else ""
@@ -31,9 +31,11 @@ func shoot() -> void:
 	if not collider is CharacterBody3D:
 		create_decal(collider)
 	else:
-		collider.get_child(0).scale = Vector3(1.1, 1.1, 1.1)
+		collider.mesh.get_active_material(0).albedo_color = Color("ff0000")
+		collider.mesh.scale = Vector3(1.1, 1.1, 1.1)
 		await get_tree().create_timer(0.1).timeout
-		collider.get_child(0).scale = Vector3(1.0, 1.0, 1.0)
+		collider.mesh.get_active_material(0).albedo_color = Color("ffffff")
+		collider.mesh.scale = Vector3(1.0, 1.0, 1.0)
 	
 	if collider.has_user_signal(&"damage_taken"):
 		collider.emit_signal(&"damage_taken", power)
@@ -44,7 +46,7 @@ func create_decal(collider: Node3D) -> void:
 	var col_normal : Vector3 = raycast.get_collision_normal()
 	var new_decal : Decal = decal_scene.instantiate()
 	
-	collider.add_child(new_decal)
+	player.get_parent().add_decal(new_decal)
 	new_decal.global_transform.origin = col_point
 	
 	var up_vector : Vector3 = Vector3.UP if col_normal != Vector3.UP else Vector3.RIGHT
@@ -53,8 +55,6 @@ func create_decal(collider: Node3D) -> void:
 	new_decal.rotation.x -= PI/2
 	#when the col_normal is pointing straight down, the look_vector and up_vector are parallel? idk
 	
-	decals.append(new_decal)
-	if decals.size() > 10: decals.pop_front().queue_free()
 	
 	
 	

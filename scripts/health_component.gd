@@ -1,13 +1,17 @@
 extends Node
 
 @export var max_health : int = 10
-@export var defense : int = 1
+@export var defense : int = 0
+
 var current_health : int = max_health
+var parent : Node3D
 
 
 func _ready() -> void:
-	get_parent().add_user_signal("damage_taken", [{"name": "dmg"}, {"type": TYPE_INT}])
-	get_parent().connect(&"damage_taken", take_damage)
+	parent = get_parent()
+	current_health = max_health
+	parent.add_user_signal("damage_taken", [{"name": "dmg"}, {"type": TYPE_INT}])
+	parent.connect(&"damage_taken", take_damage)
 
 
 func take_damage(dmg: int) -> void:
@@ -19,4 +23,5 @@ func take_damage(dmg: int) -> void:
 	
 	
 func die() -> void:
-	get_parent().queue_free()
+	await get_tree().create_timer(0.1).timeout
+	parent.queue_free()

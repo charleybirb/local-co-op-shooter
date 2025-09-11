@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4molhyfeyhqs"]
+
+[ext_resource type="Texture2D" uid="uid://gwcv2kqu2ils" path="res://textures/test_textures/purple/texture_08.png" id="1_ptqd7"]
+[ext_resource type="Script" uid="uid://dp2xmorkro450" path="res://scripts/health_component.gd" id="2_n8wf6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mhtw8"]
+albedo_texture = ExtResource("1_ptqd7")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ahbqi"]
+material = SubResource("StandardMaterial3D_mhtw8")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.7
+radial_segments = 12
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7gix3"]
+points = PackedVector3Array(0.292885, 0.340812, 0.0265477, -0.292885, -0.340812, -0.0265477, -0.281514, -0.339959, -0.0689772, -0.292885, 0.340812, -0.0265477, -0.0266037, -0.340794, 0.29287, 0.144029, -0.341478, -0.2614, -0.0266037, 0.340794, -0.29287, -0.144079, 0.341461, 0.261387, 0.24264, -0.345111, 0.16716, 0.15636, 0.345111, 0.25344, -0.144079, -0.341461, -0.261387, -0.2614, -0.341478, 0.144029, 0.2614, 0.341478, -0.144029, 0.292885, -0.340812, -0.0265477, -0.2614, 0.341478, -0.144029, 0.15636, 0.345111, -0.25344, -0.2614, 0.341478, 0.144029, 0.144029, -0.341478, 0.2614, 0.0266037, 0.340794, 0.29287, 0.24264, -0.345111, -0.16716, 0.0266037, -0.340794, -0.29287, -0.144079, -0.341461, 0.261387, -0.144079, 0.341461, -0.261387, 0.2614, 0.341478, 0.144029, -0.2614, -0.341478, -0.144029, 0.292885, -0.340812, 0.0265477, -0.292885, 0.340812, 0.0265477, 0.0266037, 0.340794, -0.29287, -0.0266037, 0.340794, 0.29287, -0.0266037, -0.340794, -0.29287, 0.0266037, -0.340794, 0.29287, 0.292885, 0.340812, -0.0265477)
+
+[node name="Barrel" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_ahbqi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_7gix3")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_n8wf6")
+max_health = 3

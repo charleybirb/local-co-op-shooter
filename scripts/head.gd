@@ -38,7 +38,6 @@ func set_input(i: InputPackage) -> void:
 
 func move_camera(direction: Vector2, sensitivity: float) -> void:
 	if !direction: return
-	print("moving camera")
 	pan.rotate_y(-direction.x * sensitivity)
 	tilt.rotate_x(-direction.y * sensitivity)
 	tilt.rotation.x = clamp(tilt.rotation.x, deg_to_rad(TILT_CLAMP.x), deg_to_rad(TILT_CLAMP.y))
