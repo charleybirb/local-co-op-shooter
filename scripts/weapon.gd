@@ -10,13 +10,13 @@ extends Node3D
 @onready var anim_player : AnimationPlayer = $MeshInstance3D/AnimationPlayer
 
 var decals : Array[Decal] = []
-var joy_index : int
+var joypad_index : int
 
 func _ready() -> void:
-	joy_index = player.joy_index
+	joypad_index = player.joypad_index
 
 func _physics_process(_delta: float) -> void:
-	var action_suffix = str(joy_index) if joy_index != -1 else ""
+	var action_suffix = str(joypad_index) if joypad_index != -1 else ""
 	if Input.is_action_just_pressed(&"shoot" + action_suffix) and not anim_player.is_playing():
 		shoot()
 

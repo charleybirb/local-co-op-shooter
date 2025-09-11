@@ -63,7 +63,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46109, 0)
 
 [node name="PlayerOne2" parent="." instance=ExtResource("2_x4b8f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46109, -4.43712)
-joy_index = -1
+joypad_index = -1
 
 [node name="Environment" type="Node3D" parent="."]
 
