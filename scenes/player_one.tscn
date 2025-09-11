@@ -141,7 +141,6 @@ volume_db = -7.82
 script = ExtResource("3_2ye1c")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Reticle" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 8

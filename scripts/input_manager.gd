@@ -13,7 +13,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventMouseMotion: return
 	mouse_dir.x = event.relative.x
 	mouse_dir.y = event.relative.y
-	print(mouse_dir)
 
 
 func get_inputs() -> InputPackage:

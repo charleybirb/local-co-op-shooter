@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b1i4hfe43ywad"]
+[gd_scene load_steps=24 format=3 uid="uid://b1i4hfe43ywad"]
 
 [ext_resource type="Script" uid="uid://cctycctly2d0y" path="res://scripts/test_level.gd" id="1_tmr53"]
 [ext_resource type="PackedScene" uid="uid://d4igm5uqht7m4" path="res://scenes/player_one.tscn" id="2_x4b8f"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b1gsawvq01dto" path="res://textures/test_textures/light/texture_07.png" id="5_tmr53"]
 [ext_resource type="PackedScene" uid="uid://c4molhyfeyhqs" path="res://scenes/barrel.tscn" id="6_88ety"]
 [ext_resource type="Texture2D" uid="uid://cla1bhtmtgak3" path="res://textures/test_textures/purple/texture_09.png" id="6_qcd3b"]
+[ext_resource type="Script" uid="uid://0lolu0tmv57x" path="res://scripts/elevator.gd" id="7_4asn1"]
+[ext_resource type="Texture2D" uid="uid://cdsglq1x1xipf" path="res://textures/test_textures/light/texture_06.png" id="7_7gix3"]
 [ext_resource type="Texture2D" uid="uid://sesror55vuor" path="res://textures/test_textures/green/texture_08.png" id="7_88ety"]
 [ext_resource type="Script" uid="uid://dp2xmorkro450" path="res://scripts/health_component.gd" id="8_ahbqi"]
 
@@ -49,6 +51,23 @@ albedo_texture = ExtResource("6_qcd3b")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4asn1"]
+albedo_texture = ExtResource("7_7gix3")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dw7u0"]
+material = SubResource("StandardMaterial3D_4asn1")
+top_radius = 2.0
+bottom_radius = 2.0
+height = 0.2
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dw7u0"]
+points = PackedVector3Array(0.380654, 0.122173, 2.03175, -0.380654, -0.131696, -2.03175, -0.634821, -0.131696, -1.9681, -0.380654, 0.122173, -2.03175, 2.03175, -0.131696, -0.380654, -1.77758, -0.131696, 1.07912, -2.03175, 0.122173, -0.380654, 1.77758, 0.122173, -1.07912, 1.26964, -0.131696, 1.65069, 1.90446, 0.122173, 0.825347, -1.65069, 0.122173, 1.26964, -0.634821, -0.131696, 1.9681, -1.77758, -0.131696, -1.07912, 1.07912, -0.131696, -1.77758, -1.26964, 0.122173, -1.65069, 0.634821, 0.122173, -1.9681, -2.03175, -0.131696, 0.380654, -1.07912, 0.122173, 1.77758, 1.90446, -0.131696, 0.825347, 1.26964, 0.122173, 1.65069, 0.380654, -0.131696, 2.03175, 2.03175, 0.122173, 0.380654, -1.9681, 0.122173, 0.634821, 1.65069, -0.131696, -1.26964, 1.26964, 0.122173, -1.65069, -1.26964, -0.131696, 1.65069, 0.380654, -0.131696, -2.03175, -0.380654, 0.122173, 2.03175, -1.77758, 0.122173, -1.07912, -1.26964, -0.131696, -1.65069, -2.03175, -0.131696, -0.380654, 2.03175, 0.122173, -0.380654)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fyxdr"]
+size = Vector3(2.53221, 1, 2.77299)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ahbqi"]
 albedo_texture = ExtResource("7_88ety")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
@@ -68,9 +87,12 @@ script = ExtResource("1_tmr53")
 environment = SubResource("Environment_88ety")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 13.6208, 0)
 light_color = Color(1, 0.9, 0.9, 1)
+light_specular = 0.603
 shadow_enabled = true
+shadow_opacity = 0.61
+shadow_blur = 3.644
 directional_shadow_blend_splits = true
 
 [node name="PlayerOne" parent="." instance=ExtResource("2_x4b8f")]
@@ -103,27 +125,27 @@ size = Vector3(50, 1, 50)
 material = SubResource("StandardMaterial3D_tmr53")
 
 [node name="Wall" type="CSGBox3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.345146, 2.74123, -24.5063)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.345146, 8.28304, -24.5063)
 use_collision = true
-size = Vector3(50.7158, 4.68018, 1)
+size = Vector3(50.7158, 15.7638, 1)
 material = SubResource("StandardMaterial3D_qcd3b")
 
 [node name="Wall2" type="CSGBox3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.229, 2.74123, -0.0724735)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.229, 8.40691, -0.0724735)
 use_collision = true
-size = Vector3(0.94806, 4.68018, 49.8676)
+size = Vector3(0.94806, 16.0115, 49.8676)
 material = SubResource("StandardMaterial3D_qcd3b")
 
 [node name="Wall3" type="CSGBox3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.318039, 2.74123, 24.1854)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.318039, 8.50698, 24.2162)
 use_collision = true
-size = Vector3(50.7701, 4.68018, 1.35191)
+size = Vector3(50.7701, 16.2117, 1.29021)
 material = SubResource("StandardMaterial3D_qcd3b")
 
 [node name="Wall4" type="CSGBox3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3937, 2.74123, 0.22097)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3937, 8.35482, 0.22097)
 use_collision = true
-size = Vector3(1.34653, 4.68018, 49.2807)
+size = Vector3(1.34653, 15.9074, 49.2807)
 material = SubResource("StandardMaterial3D_qcd3b")
 
 [node name="Platform" type="CSGBox3D" parent="Environment"]
@@ -197,6 +219,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.04087, 9.69967, -12.1591)
 use_collision = true
 size = Vector3(3.82, 1, 5.014)
 material = SubResource("StandardMaterial3D_88ety")
+
+[node name="Elevator" type="AnimatableBody3D" parent="Environment" node_paths=PackedStringArray("area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.81321, 13.6212, -0.66108)
+script = ExtResource("7_4asn1")
+area = NodePath("Area3D")
+top_position = Vector3(-5.813, 13.621, -0.661)
+bottom_position = Vector3(-5.813, 0.433, -0.661)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Elevator"]
+mesh = SubResource("CylinderMesh_dw7u0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Elevator"]
+shape = SubResource("ConvexPolygonShape3D_dw7u0")
+
+[node name="Area3D" type="Area3D" parent="Environment/Elevator"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Elevator/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0645981, 0.608088, -0.0513535)
+shape = SubResource("BoxShape3D_fyxdr")
 
 [node name="DecalManager" type="Node3D" parent="."]
 
