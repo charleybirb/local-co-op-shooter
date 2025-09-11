@@ -3,7 +3,6 @@ extends Node3D
 @export var raycast : RayCast3D
 @export var decal_scene : PackedScene
 @export var power : int = 5
-
 @export var player : CharacterBody3D
 
 @onready var sfx : AudioStreamPlayer = $AudioStreamPlayer
@@ -11,11 +10,13 @@ extends Node3D
 
 var joypad_index : int
 
+
 func _ready() -> void:
 	joypad_index = player.joypad_index
 
 
 func _physics_process(_delta: float) -> void:
+	if not visible: return
 	var action_suffix = str(joypad_index) if joypad_index != -1 else ""
 	if Input.is_action_just_pressed(&"shoot" + action_suffix) and not anim_player.is_playing():
 		shoot()
@@ -26,14 +27,13 @@ func shoot() -> void:
 	sfx.play()
 	
 	if not raycast.get_collider(): return
-	
 	var collider : Node3D = raycast.get_collider()
 	
 	if collider.is_in_group(&"players"): 
 		collider.emit_signal(&"damage_taken", 1)
 		return
 	
-	if not collider is CharacterBody3D:
+	if not collider is CharacterBody3D and not collider is AnimatableBody3D:
 		create_decal()
 
 	
@@ -54,7 +54,4 @@ func create_decal() -> void:
 	new_decal.look_at(look_vector, up_vector)
 	new_decal.rotation.x -= PI/2
 	#when the col_normal is pointing straight down, the look_vector and up_vector are parallel? idk
-	
-	
-	
 	

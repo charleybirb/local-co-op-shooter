@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b1i4hfe43ywad"]
+[gd_scene load_steps=29 format=3 uid="uid://b1i4hfe43ywad"]
 
 [ext_resource type="Script" uid="uid://cctycctly2d0y" path="res://scripts/test_level.gd" id="1_tmr53"]
 [ext_resource type="PackedScene" uid="uid://d4igm5uqht7m4" path="res://scenes/player_one.tscn" id="2_x4b8f"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://cdsglq1x1xipf" path="res://textures/test_textures/light/texture_06.png" id="7_7gix3"]
 [ext_resource type="Texture2D" uid="uid://sesror55vuor" path="res://textures/test_textures/green/texture_08.png" id="7_88ety"]
 [ext_resource type="Script" uid="uid://dp2xmorkro450" path="res://scripts/health_component.gd" id="8_ahbqi"]
+[ext_resource type="Script" uid="uid://j2jjkt5g15pe" path="res://scripts/pickup_area.gd" id="11_fyxdr"]
+[ext_resource type="Texture2D" uid="uid://b04v80dcxpa8a" path="res://textures/test_textures/red/texture_07.png" id="12_kpk0m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tmr53"]
 sky_top_color = Color(0.34, 0.593, 1, 1)
@@ -22,18 +24,21 @@ sun_angle_max = 197.76
 
 [sub_resource type="Sky" id="Sky_qcd3b"]
 sky_material = SubResource("ProceduralSkyMaterial_tmr53")
+radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_88ety"]
 background_mode = 2
-background_energy_multiplier = 0.2
+background_color = Color(1, 1, 1, 1)
+background_energy_multiplier = 0.45
 sky = SubResource("Sky_qcd3b")
 ambient_light_source = 2
 ambient_light_color = Color(0.552941, 0.721569, 0.780392, 1)
 ambient_light_energy = 0.19
 tonemap_mode = 3
 tonemap_exposure = 1.41
-glow_intensity = 1.71
-glow_strength = 1.3
+glow_enabled = true
+glow_intensity = 0.68
+glow_strength = 0.98
 glow_bloom = 0.09
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmr53"]
@@ -80,6 +85,15 @@ rings = 6
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4asn1"]
 points = PackedVector3Array(-0.184212, -0.502652, -0.450333, 0.0226308, 0.471271, 0.493935, 0.228933, 0.530482, 0.435226, 0.20362, -0.783077, 0.354307, 0.401404, 0.582996, -0.268844, -0.483198, 0.595334, 0.0227464, -0.42183, -0.622641, 0.230238, 0.466382, -0.621156, -0.0659236, -0.09694, 0.869815, -0.306855, 0.202178, -0.807082, -0.335782, 0.0231132, 0.973579, 0.144837, -0.364392, -0.774705, -0.185632, 0.435209, 0.530579, 0.228952, -0.036339, 0.59135, -0.480003, -0.423461, 0.595171, -0.244917, -0.242455, 0.648208, 0.40576, -0.00689387, -0.475361, 0.498152, -0.00727364, -0.974996, 0.145036, 0.255631, -0.582984, -0.414619, 0.399517, -0.464232, 0.283483, -0.450342, -0.502655, -0.184181, 0.323778, 0.872683, 0.0229065, -0.242455, -0.648208, 0.40576, -0.279371, 0.907363, 0.0229846, 0.498166, 0.475194, -0.00684352, 0.23026, 0.622644, -0.421823, 0.323781, -0.872692, 0.0229067, 0.20362, 0.783077, 0.354307, -0.0676627, -0.937919, -0.218819, -0.414581, 0.58292, 0.255679, 0.0227857, -0.595224, -0.4832, 0.434964, -0.500743, -0.24236)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qs1vn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13hs1"]
+albedo_texture = ExtResource("12_kpk0m")
+
+[sub_resource type="BoxMesh" id="BoxMesh_fptmo"]
+material = SubResource("StandardMaterial3D_13hs1")
+size = Vector3(0.3, 0.3, 0.3)
+
 [node name="TestLevel" type="Node3D"]
 script = ExtResource("1_tmr53")
 
@@ -89,6 +103,8 @@ environment = SubResource("Environment_88ety")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 13.6208, 0)
 light_color = Color(1, 0.9, 0.9, 1)
+light_energy = 1.397
+light_angular_distance = 1.49
 light_specular = 0.603
 shadow_enabled = true
 shadow_opacity = 0.61
@@ -254,3 +270,15 @@ shape = SubResource("ConvexPolygonShape3D_4asn1")
 script = ExtResource("8_ahbqi")
 max_health = 3
 mesh = NodePath("../MeshInstance3D")
+
+[node name="PickupArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84697, 1.01409, -3.30699)
+script = ExtResource("11_fyxdr")
+type = &"weapon"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea"]
+shape = SubResource("BoxShape3D_qs1vn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickupArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.357263, 0)
+mesh = SubResource("BoxMesh_fptmo")

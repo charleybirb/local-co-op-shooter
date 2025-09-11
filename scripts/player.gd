@@ -11,6 +11,7 @@ const COYOTE_BUFFER : float = 0.187
 @export var head : Node3D
 @export var mesh : MeshInstance3D
 @export var reticle : CanvasLayer
+@export var weapon : Node3D
 
 var speed : float = WALK_SPEED
 
@@ -92,3 +93,8 @@ func apply_velocity(delta: float, input: InputPackage) -> void:
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 2.5)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 2.5)
+
+
+func enable_weapon() -> void:
+	weapon.visible = true
+	weapon.anim_player.play(&"equip")
