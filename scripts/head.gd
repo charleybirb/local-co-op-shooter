@@ -6,15 +6,14 @@ extends Node3D
 
 const LOOK_SENS : float = 0.06
 const MOUSE_SENS : float = 0.003
-const BOB_FREQ : float = 2.0
-const BOB_AMP : float = 0.08
+const BOB_FREQ : float = 2.8
+const BOB_AMP : float = 0.086
 const BASE_FOV : float = 75.0
-const FOV_CHANGE : float = 11.6
+const FOV_CHANGE : float = 12.7
 const TILT_CLAMP : Vector2 = Vector2(-75.0, 80.0)
 
 var parent : CharacterBody3D
 var t_bob : float = 0.0
-
 var input : InputPackage
 
 func _ready() -> void:
@@ -35,6 +34,7 @@ func _physics_process(delta: float) -> void:
 
 func set_input(i: InputPackage) -> void:
 	input = i
+
 
 func move_camera(direction: Vector2, sensitivity: float) -> void:
 	if !direction: return

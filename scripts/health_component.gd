@@ -11,7 +11,7 @@ var parent : Node3D
 func _ready() -> void:
 	parent = get_parent()
 	current_health = max_health
-	parent.add_user_signal("damage_taken", [{"name": "dmg"}, {"type": TYPE_INT}])
+	parent.add_user_signal("damage_taken", [{"name": "dmg", "type": TYPE_INT}])
 	parent.connect(&"damage_taken", take_damage)
 
 

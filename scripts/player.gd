@@ -63,8 +63,11 @@ func jump() -> void:
 
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
-		velocity += get_gravity() * delta
-
+		var gravity = get_gravity()
+		if sign(velocity.y) == -1:
+			gravity *= 2.0
+		velocity += gravity * delta
+		
 
 func apply_velocity(delta: float, input: InputPackage) -> void:
 	var input_dir := input.move_direction

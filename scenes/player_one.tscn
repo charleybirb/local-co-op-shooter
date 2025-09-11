@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://d4igm5uqht7m4"]
 
 [ext_resource type="Texture2D" uid="uid://d0u0ch5v815o3" path="res://textures/test_textures/orange/texture_05.png" id="1_5g46b"]
-[ext_resource type="Script" uid="uid://d03w6r3sx6gww" path="res://scripts/player_one.gd" id="1_jjvma"]
+[ext_resource type="Script" uid="uid://d03w6r3sx6gww" path="res://scripts/player.gd" id="1_jjvma"]
 [ext_resource type="Script" uid="uid://khrwfnivy0l6" path="res://scripts/weapon.gd" id="3_2pt5b"]
 [ext_resource type="Script" uid="uid://c11p5jggd1jax" path="res://scripts/input_manager.gd" id="3_2ye1c"]
 [ext_resource type="Script" uid="uid://covxv0ll5wsvm" path="res://scripts/head.gd" id="3_44md6"]
