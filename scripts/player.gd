@@ -10,11 +10,15 @@ const COYOTE_BUFFER : float = 0.187
 @export var joypad_index : int = 0
 @export var head : Node3D
 @export var mesh : MeshInstance3D
+@export var reticle : CanvasLayer
 
 var speed : float = WALK_SPEED
 
 var jump_time_pressed : float = 0.0
 var coyote_time : float = 0.0
+
+func _ready() -> void:
+	add_to_group(&"players")
 
 
 func _physics_process(delta: float) -> void:

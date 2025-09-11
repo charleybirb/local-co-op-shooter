@@ -32,4 +32,7 @@ func take_damage(dmg: int) -> void:
 	
 func die() -> void:
 	await get_tree().create_timer(0.1).timeout
+	if parent.is_in_group(&"players"):
+		parent.position.y = 500
+		return
 	parent.queue_free()

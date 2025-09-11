@@ -1,14 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://b27626k15ijot"]
+[gd_scene load_steps=3 format=3 uid="uid://b27626k15ijot"]
 
+[ext_resource type="Script" uid="uid://bnbvkxoxb1fna" path="res://scenes/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://b1i4hfe43ywad" path="res://scenes/test_level.tscn" id="1_o5qli"]
 
-[node name="main" type="Control"]
+[node name="main" type="Control" node_paths=PackedStringArray("level")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_0wfyh")
+level = NodePath("TestLevel")
+
+[node name="TestLevel" parent="." instance=ExtResource("1_o5qli")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -17,24 +23,56 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+stretch = true
 
 [node name="PlayerOneViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1920, 542)
+size = Vector2i(1920, 540)
 render_target_update_mode = 4
 
-[node name="TestLevel" parent="VBoxContainer/SubViewportContainer/PlayerOneViewport" instance=ExtResource("1_o5qli")]
+[node name="Camera3D" type="Camera3D" parent="VBoxContainer/SubViewportContainer/PlayerOneViewport"]
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+stretch = true
 
 [node name="PlayerTwoViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer2"]
 handle_input_locally = false
 size = Vector2i(1920, 540)
 render_target_update_mode = 4
+
+[node name="Camera3D2" type="Camera3D" parent="VBoxContainer/SubViewportContainer2/PlayerTwoViewport"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer2/CenterContainer"]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 2
+
+[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer2/CenterContainer2"]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 2

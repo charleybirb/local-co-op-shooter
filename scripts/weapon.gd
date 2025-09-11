@@ -28,6 +28,11 @@ func shoot() -> void:
 	if not raycast.get_collider(): return
 	
 	var collider : Node3D = raycast.get_collider()
+	
+	if collider.is_in_group(&"players"): 
+		collider.emit_signal(&"damage_taken", 1)
+		return
+	
 	if not collider is CharacterBody3D:
 		create_decal()
 
