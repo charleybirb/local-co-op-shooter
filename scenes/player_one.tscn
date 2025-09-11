@@ -134,6 +134,7 @@ target_position = Vector3(0, 0, -40)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Head/Pan/Tilt/Camera3D/WeaponSpot"]
 stream = ExtResource("6_6sjib")
+volume_db = -7.82
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("3_2ye1c")
@@ -153,6 +154,7 @@ offset_bottom = 2.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HealthComponent" type="Node" parent="."]
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("mesh")]
 script = ExtResource("7_g53jo")
 max_health = 50
+mesh = NodePath("../MeshInstance3D")

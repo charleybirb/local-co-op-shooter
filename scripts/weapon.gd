@@ -29,19 +29,14 @@ func shoot() -> void:
 	
 	var collider : Node3D = raycast.get_collider()
 	if not collider is CharacterBody3D:
-		create_decal(collider)
-	else:
-		collider.mesh.get_active_material(0).albedo_color = Color("ff0000")
-		collider.mesh.scale = Vector3(1.1, 1.1, 1.1)
-		await get_tree().create_timer(0.1).timeout
-		collider.mesh.get_active_material(0).albedo_color = Color("ffffff")
-		collider.mesh.scale = Vector3(1.0, 1.0, 1.0)
+		create_decal()
+
 	
 	if collider.has_user_signal(&"damage_taken"):
 		collider.emit_signal(&"damage_taken", power)
 	
 
-func create_decal(collider: Node3D) -> void:
+func create_decal() -> void:
 	var col_point : Vector3 = raycast.get_collision_point()
 	var col_normal : Vector3 = raycast.get_collision_normal()
 	var new_decal : Decal = decal_scene.instantiate()
