@@ -19,6 +19,11 @@ var coyote_time : float = 0.0
 
 func _ready() -> void:
 	add_to_group(&"players")
+	
+	#match camera and mesh rotation to player rotation in editor
+	mesh.rotation.y = rotation.y
+	head.pan.rotation.y = rotation.y
+	rotation.y = 0.0
 
 
 func _physics_process(delta: float) -> void:

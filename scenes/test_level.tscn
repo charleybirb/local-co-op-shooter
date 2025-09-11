@@ -99,7 +99,7 @@ directional_shadow_blend_splits = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.10051, 11.1038, -11.2361)
 
 [node name="PlayerOne2" parent="." instance=ExtResource("2_x4b8f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46109, -4.43712)
+transform = Transform3D(-0.00366512, 0, 0.999993, 0, 1, 0, -0.999993, 0, -0.00366512, 1.48981, 1.46109, -1.06235)
 joypad_index = -1
 
 [node name="Environment" type="Node3D" parent="."]
