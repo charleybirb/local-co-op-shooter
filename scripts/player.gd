@@ -42,34 +42,48 @@ func _physics_process(delta: float) -> void:
 	input.queue_free()
 
 
-func check_jump(delta: float, is_grounded: bool, input: InputPackage) -> void:
-	if coyote_time > 0.0:
-		coyote_time += delta
-		if coyote_time < COYOTE_BUFFER:
-			if &"jump" in input.pressed_actions:
-				jump()
+func check_jump(_delta: float, is_grounded: bool, input: InputPackage) -> void:
+	var is_jump_pressed : bool = &"jump" in input.pressed_actions
 	
-	if is_grounded:
-		coyote_time = 0.0
-
-	if jump_time_pressed > 0.0:
-		jump_time_pressed += delta
-		if jump_time_pressed < JUMP_BUFFER:
-			if is_grounded:
-				jump()
-				jump_time_pressed = 0.0
-		else:
-			jump_time_pressed = 0.0
+	if is_grounded and is_jump_pressed: jump()
 	
-	if not is_grounded and coyote_time == 0.0:
-		coyote_time += delta
+	#if is_grounded and coyote_time != 0.0:
+		#coyote_time = 0.0
+		#jump_time_pressed = 0.0
+	#
+	#if jump_time_pressed > 0.0:
+		#jump_time_pressed += delta
+		#check_jump_buffer(is_grounded)
+#
+	#if coyote_time > 0.0:
+		#coyote_time += delta
+		#check_coyote_jump(is_jump_pressed)
+	#
+	#if not is_grounded and coyote_time == 0.0 and not is_jump_pressed:
+		#coyote_time += delta
+#
+	#if is_jump_pressed and jump_time_pressed == 0.0:
+		#jump_time_pressed += delta
 
-	if &"jump" in input.pressed_actions and jump_time_pressed == 0.0:
-		jump_time_pressed += delta
+
+func check_coyote_jump(is_jump_pressed: bool) -> void:
+	if coyote_time < COYOTE_BUFFER:
+		if is_jump_pressed:
+			jump()
+
+
+func check_jump_buffer(is_grounded: bool) -> void:
+	if jump_time_pressed < JUMP_BUFFER:
+		if is_grounded:
+			jump()
+	else:
+		jump_time_pressed = 0.0
 
 
 func jump() -> void:
 	velocity.y += JUMP_VELOCITY
+	jump_time_pressed = 0.0
+	coyote_time = 0.0
 
 
 func apply_gravity(delta: float) -> void:

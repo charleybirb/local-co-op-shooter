@@ -10,20 +10,22 @@ extends Node3D
 
 var joypad_index : int
 
+var is_equipped : bool = false
 
 func _ready() -> void:
 	joypad_index = player.joypad_index
 
 
 func _physics_process(_delta: float) -> void:
-	if not visible: return
+	if not is_equipped: return
 	var action_suffix = str(joypad_index) if joypad_index != -1 else ""
 	if Input.is_action_just_pressed(&"shoot" + action_suffix) and not anim_player.is_playing():
 		shoot()
 
 
 func equip() -> void:
-	pass
+	anim_player.play("equip")
+	is_equipped = true
 
 
 func shoot() -> void:
