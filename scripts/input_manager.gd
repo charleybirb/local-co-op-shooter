@@ -9,7 +9,7 @@ func _ready() -> void:
 	parent = get_parent()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if parent.joypad_index >= 0: return
+	if parent.joypad_index != -1: return
 	if not event is InputEventMouseMotion: return
 	mouse_dir.x = event.relative.x
 	mouse_dir.y = event.relative.y

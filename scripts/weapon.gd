@@ -6,7 +6,7 @@ extends Node3D
 @export var player : CharacterBody3D
 
 @onready var sfx : AudioStreamPlayer = $AudioStreamPlayer
-@onready var anim_player : AnimationPlayer = $MeshInstance3D/AnimationPlayer
+@onready var anim_player : AnimationPlayer = $TestWeapon/AnimationPlayer
 
 var joypad_index : int
 
@@ -20,6 +20,10 @@ func _physics_process(_delta: float) -> void:
 	var action_suffix = str(joypad_index) if joypad_index != -1 else ""
 	if Input.is_action_just_pressed(&"shoot" + action_suffix) and not anim_player.is_playing():
 		shoot()
+
+
+func equip() -> void:
+	pass
 
 
 func shoot() -> void:
